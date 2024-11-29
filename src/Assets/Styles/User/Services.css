@@ -1,0 +1,61 @@
+.service-body{
+    position: relative;
+    top: 13vh;
+    width: 80%;
+    min-height: 51.5vh;
+    left: 5.5vw;
+    color: white;
+}
+
+.service-outer{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.service-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../Images/img-9q0ygCSnmVh86mJ3Ly4Rm.jpeg');
+    background-size: cover; /* Ensures the image covers the entire viewport */
+
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    /* background-position: center; Centers the image */
+    z-index: -1; /* Ensures other elements appear above the image */
+}
+
+.footerclass{
+    position: relative !important;
+    bottom:0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 110px !important;
+    width: 100%;
+}
+
+
+.response-anim{
+    clip-path:polygon(0 0, 0 0, 0 100%, 0 100%);
+animation: text linear 1s forwards;
+animation-delay: 1s;
+color: white;
+padding: 20px;
+/* margin-left: 10px; */
+background-color: rgba(0, 0, 0, 0.8);
+border-radius: 10px;
+
+}
+
+@keyframes text {
+	0% {
+    clip-path:polygon(0 0, 0 0, 0 100%, 0 100%)
+	}
+	100% {
+    clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%)
+	}
+}

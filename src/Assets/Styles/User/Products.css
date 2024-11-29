@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i');
+
+.cus-body {
+  font-family: 'Muli', sans-serif;
+  /* background: linear-gradient(135deg, #f3f3f3 0%, #e2e2e2 100%); */
+  
+}
+
+.cus-image {
+  background-image: url('../../Images/wallpaperflare.com_wallpaper.jpg');
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+.shell {
+  padding: 80px 0;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.wsk-cp-product {
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: calc(25% - 20px);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.wsk-cp-product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wsk-cp-img {
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+}
+
+.wsk-cp-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wsk-cp-product:hover .wsk-cp-img img {
+  transform: scale(1.1);
+}
+
+.wsk-cp-text {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.wsk-cp-text .title-product h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 15px 0;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+  animation: slideIn 0.8s ease-in-out;
+}
+
+.wsk-cp-text .title-product h3::after {
+  content: '';
+  width: 40%;
+  height: 2px;
+  background: #FF9800;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.wsk-cp-text .description-prod {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  color: #212121;
+}
+
+.wcf-left, .wcf-right {
+  display: inline-block;
+}
+
+.wcf-right {
+  float: right;
+}
+
+a.buy-btn {
+  color: #212121;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  border: 2px solid #212121;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+a.buy-btn:hover, a.buy-btn:focus {
+  border-color: #FF9800;
+  background: #FF9800;
+  color: #fff;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}

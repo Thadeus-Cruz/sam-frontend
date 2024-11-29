@@ -1,0 +1,226 @@
+html {
+  font-family: 'Montserrat', sans-serif !important; 
+}
+
+.bg-image {
+    position: relative;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../Images/bg.jpg'); 
+    /* background-color: green; */
+    background-size: cover;
+    background-position: center;
+    /* opacity: 0.6; */
+    object-fit: cover;
+    animation: 2s fadeIn ease-in-out;
+  }
+
+
+  
+  .homepage-text1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    color: white;
+    transition: 0.4s ease;
+    top: -53vh;
+    cursor: pointer;
+    position: relative;
+    font-weight: 600;
+    text-align: center;
+  }
+.homepage-text2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  color: white;
+  transition: 0.4s ease;
+  cursor: pointer;
+  padding-top: 10px;
+  position: relative;
+  text-align: center;
+  top: -52vh;
+
+}
+
+.homeimagebgcolor {
+  position: relative;
+  /* top: 0;
+  left: 0; */
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-y: hidden;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 1180px) {
+  .homepage-text2 {
+    top: 60vh;
+  }
+  
+}
+
+
+.homepage-video {
+  position: relative;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 180vh;
+  height: auto;
+}
+
+.homepage-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.homepage-text3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  color: white;
+  animation: blink 4s ease-in-out infinite;
+  cursor: pointer;
+  padding-top: 10px;
+  position: relative;
+  text-align: center;
+  top: -25vh;
+  /* left: 50vw; */
+  /* transform: translate(-50%, -50%); */
+}
+.homepage-emergency {
+  background-color: rgb(0, 0, 0);
+  font-family: 'Montserrat', sans-serif;
+  transition: 0.4s ease;
+  color: white;
+  cursor: pointer;
+  padding: 40px 20px; /* Added padding to include the text within the colored div */
+  border-radius: 20px;
+  position: relative;
+  top: 27vh;
+  left: 50vw;
+  width: 80vw;
+  transform: translate(-50%, -50%);
+  text-align: center; /* Center align text within the div */
+}
+
+.homepage-emergency-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: 900;
+  /* padding-top: 10px; */
+}
+
+.emergency-list {
+  margin-top: 20px; /* Adjust to position list correctly */
+  padding-left: 20px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  text-align: left; /* Align list items to the left */
+}
+
+.emergency-list li {
+  margin-bottom: 10px;
+}
+.homepage-emergency-button{
+  top: -20vh;
+  /* right: -70vw; */
+  width: 20vw;
+  left:70vw;
+  position:relative;
+}
+.homepage-emergency-button-overtext {
+  font-family: 'Montserrat', sans-serif;
+  
+  font-size: 25px;
+ 
+  z-index: 5;
+  color: rgb(223, 40, 40);
+  cursor: pointer;
+  font-weight: 900;
+  text-shadow: 
+    0 0 5px white, 
+    0 0 10px white, 
+    0 0 15px white, 
+    0 0 20px white, 
+    0 0 25px white;
+}
+
+
+.slide-button{
+  color: #d53f3f;
+  font-size: 3vh;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -.03em;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: .35em;
+  transition:
+    .1s all cubic-bezier(0.455, 0.030, 0.515, 0.955),
+    .3s padding cubic-bezier(0.455, 0.030, 0.515, 0.955),
+    0s font-size;
+  border: .15em solid currentColor;
+  border-radius: 2em;
+}
+.slide-arrow{
+  overflow: hidden;
+  position: relative;
+  padding-right: 2.25em;
+  padding-left: 1em;
+}
+.slide-arrow:hover{
+  padding-right: 1em;
+  padding-left: 2.25em;
+  color: #f84141;
+  box-shadow: 0 0 1em 0 hsla(329, 64%, 54%, .35);
+}
+
+.slide-arrow::before, .slide-arrow::after{
+  content: '\1f872';
+  color: #d53f3f;
+  display: inline-block;
+  position: absolute;
+  transition:
+    .3s opacity cubic-bezier(0.455, 0.030, 0.515, 0.955),
+    .1s color cubic-bezier(0.455, 0.030, 0.515, 0.955);
+  opacity: 1;
+}
+.slide-arrow:hover::before, .slide-arrow:hover::after{
+  color: #f68787;
+}
+.slide-arrow::before{
+  left: .75em;
+  opacity: 0;
+}
+.slide-arrow:hover::before{
+  opacity: 1;
+}
+.slide-arrow::after{
+  right: .75em;
+}
+.slide-arrow:hover::after{
+  opacity: 0;
+}
+
+
+
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  25%,75% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

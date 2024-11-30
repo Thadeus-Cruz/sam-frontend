@@ -21,4 +21,4 @@ RUN npm install -g serve
 EXPOSE 80
 
 # Command to serve the build version of the app
-CMD ["serve", "-s", "build", "-l", "5000"]
+CMD ["serve", "-s", "build", "-l", "80"]

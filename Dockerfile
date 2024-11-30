@@ -1,18 +1,24 @@
-FROM node:18-alpine3.17 as build
+# Use an official node image as a base
+FROM node:16-alpine
 
+# Set the working directory
 WORKDIR /app
-COPY . /app
 
-RUN npm i npm@latest -g
+# Install dependencies
+COPY package*.json ./
 RUN npm install
+
+# Copy the React app build files
+COPY . .
+
+# Build the React app
 RUN npm run build
 
-FROM ubuntu
-RUN apt-get update
-RUN apt-get install nginx -y
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/build /var/www/html/
+# Install 'serve' globally to serve the production build
+RUN npm install -g serve
 
-
+# Expose the port the app will run on
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+
+# Command to serve the build version of the app
+CMD ["serve", "-s", "build", "-l", "5000"]

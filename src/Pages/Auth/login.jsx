@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../Auth/axiosInstance.jsx';
 import '../../Assets/Styles/login.css'; 
 import CustomCarAnimation from '../../Components/CarAnimation.jsx';
 
@@ -18,16 +19,10 @@ const Login = () => {
 
   const validateForm = async () => {
     try {
-      const response = await fetch('http://localhost:8080/customers/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await axiosInstance.post('/customers/login', { email, password });
 
-      if (response.ok) {
-        return await response.json();  // Returning the customer details
+      if (response.status === 200) {
+        return response.data;  // Returning the customer details
       } else {
         return null;
       }
@@ -40,18 +35,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsSubmitting(true); // Set loading state
+
     const customer = await validateForm();
 
     if (!customer) {
       setIsValidSubmission(false);
+      setIsSubmitting(false); // Reset loading state
       return;
     }
 
     setIsValidSubmission(true);
-    setIsSubmitting(true);
-
     setTimeout(() => {
-      setIsSubmitting(false);
       const token = Math.random().toString(36).substring(2);
       
       if (rememberMe) {
@@ -125,8 +120,8 @@ const Login = () => {
             </label>
           </div>
           <div>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? <span className="spinner"></span> : 'Login'}
+            <button type="submit" disabled={isSubmitting}> {/* Disable button when loading */}
+              {isSubmitting ? "Logging in..." : "Login"} {/* Show loading text */}
             </button>
           </div>
           {!isValidSubmission && (

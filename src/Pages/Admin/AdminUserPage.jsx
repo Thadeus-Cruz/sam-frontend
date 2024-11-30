@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../Auth/axiosInstance';
 import "../../Assets/Styles/Admin/AdminUserPage.css";
 import Sidebar from "../../Components/SideBar";
 
@@ -21,23 +22,20 @@ const AdminUserPage = () => {
   }, [navigate]);
 
   useEffect(() => {
-    // Fetch customer data from API
-    fetch('http://localhost:8080/customers')
-      .then(response => response.json())
-      .then(data => setCustomers(data))
+    // Fetch customer data from API using axiosInstance
+    axiosInstance.get('/customers')
+      .then(response => setCustomers(response.data))
       .catch(error => console.error('Error fetching customer data:', error));
   }, []);
 
   const deleteRecord = (index) => {
     const customerId = customers[index].id;
-    fetch(`http://localhost:8080/customers/${customerId}`, {
-      method: 'DELETE',
-    })
-    .then(() => {
-      const updatedCustomers = customers.filter((_, i) => i !== index);
-      setCustomers(updatedCustomers);
-    })
-    .catch(error => console.error('Error deleting customer:', error));
+    axiosInstance.delete(`/customers/${customerId}`)
+      .then(() => {
+        const updatedCustomers = customers.filter((_, i) => i !== index);
+        setCustomers(updatedCustomers);
+      })
+      .catch(error => console.error('Error deleting customer:', error));
   };
 
   const editRecord = (index) => {
@@ -60,21 +58,14 @@ const AdminUserPage = () => {
 
   const saveChanges = (index) => {
     const customer = customers[index];
-    fetch(`http://localhost:8080/customers/${customer.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(customer),
-    })
-    .then(response => response.json())
-    .then(updatedCustomer => {
-      const updatedCustomers = [...customers];
-      updatedCustomers[index] = updatedCustomer;
-      updatedCustomers[index].editable = false;
-      setCustomers(updatedCustomers);
-    })
-    .catch(error => console.error('Error updating customer:', error));
+    axiosInstance.put(`/customers/${customer.id}`, customer)
+      .then(response => {
+        const updatedCustomers = [...customers];
+        updatedCustomers[index] = response.data;
+        updatedCustomers[index].editable = false;
+        setCustomers(updatedCustomers);
+      })
+      .catch(error => console.error('Error updating customer:', error));
   };
 
   return (

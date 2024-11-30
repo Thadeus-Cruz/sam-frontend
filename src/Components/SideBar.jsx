@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../Assets/Styles/SideBar.css';
 import { FaCaretUp, FaSignOutAlt, FaCalendar, FaUser, FaCar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { AiFillProduct } from 'react-icons/ai';
 
 function SideBar() {
   const [isFooterCollapsed, setIsFooterCollapsed] = useState(false);
@@ -43,6 +44,11 @@ function SideBar() {
         <a href='/admin/repairs'>
           <div className="sidebar-nav-button">
             <FaCar /><span>Add Garage</span>
+          </div>
+        </a>
+        <a href='/admin/products'>
+          <div className="sidebar-nav-button">
+            <AiFillProduct/><span>Add Products</span>
           </div>
         </a>
         <hr />

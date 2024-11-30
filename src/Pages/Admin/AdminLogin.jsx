@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../Auth/axiosInstance.jsx';
 import '../../Assets/Styles/login.css'; 
 import CustomCarAnimation from '../../Components/CarAnimation.jsx';
-
-const adminCredentials = {
-  email: 'luthadcruz@gmail.com',
-  password: '123'
-};
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -19,14 +15,22 @@ const AdminLogin = () => {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const validateForm = () => {
-    return email === adminCredentials.email && password === adminCredentials.password;
+  const validateForm = async () => {
+    try {
+      const response = await axiosInstance.post('/admins/login', { email, password });
+
+      return response.status === 200;
+    } catch (error) {
+      console.error('Error during login:', error);
+      return false;
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    const isValid = await validateForm();
+    if (!isValid) {
       setIsValidSubmission(false);
       return;
     }
@@ -56,7 +60,6 @@ const AdminLogin = () => {
     }, 5000);
   };
 
-  // Check for token expiration on component mount
   useEffect(() => {
     const adminAuthToken = sessionStorage.getItem('adminAuthToken');
     if (!adminAuthToken) {

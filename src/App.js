@@ -14,6 +14,7 @@ import AdminUserPage from './Pages/Admin/AdminUserPage.jsx';
 import AdminLogin from './Pages/Admin/AdminLogin.jsx';
 import Dashboard from './Pages/Admin/Dashboard.jsx';
 import AdminRepairPage from './Pages/Admin/AdminRepair.jsx';
+import AdminProductPage from './Pages/Admin/AdminProductPage.jsx';
 
 const App = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -36,6 +37,8 @@ const App = () => {
         <Route path='/admin/login' element={<AdminLogin />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/repairs' element={<AdminRepairPage setGarages={setGarages} garages={garages} />} />
+        <Route path='/admin/products' element={<AdminProductPage />} />
+
       </Routes>
     </Router>
   );

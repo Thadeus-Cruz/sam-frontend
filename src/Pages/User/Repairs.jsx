@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../Pages/Auth/axiosInstance';
 import '../../Assets/Styles/User/Repairs.css';
 import NavBar from '../../Components/NavBar';
 import { FaMapMarkedAlt, FaStar } from 'react-icons/fa';
@@ -22,14 +22,14 @@ const renderStars = (rating) => {
 const Repair = ({ repair }) => {
   return (
     <div className="repair-body">
-      <img src={repair.image} alt={repair.garageName} className="repair-image" />
+      <img src={repair.imgURL} alt={repair.garageName} className="repair-image" />
       <div className="repair-details">
         <h3>{repair.garageName}</h3>
         <p><span className='repair-p'>Contact: </span>{repair.contact}</p>
         <p><span className='repair-p'>Email: </span>{repair.email}</p>
         <p><span className='repair-p'>Address: </span>{repair.address}</p>
         <p><span className='repair-p'>Rating: </span>{renderStars(repair.rating)}</p>
-        <a href={repair.mapLink} target="_blank" rel="noopener noreferrer" className="repair-map-link">
+        <a href={repair.locationURL} target="_blank" rel="noopener noreferrer" className="repair-map-link">
           <FaMapMarkedAlt size={30} color='red' />
         </a>
       </div>
@@ -42,7 +42,7 @@ const Repairs = () => {
 
   useEffect(() => {
     // Fetch garages from the backend
-    axios.get('http://localhost:8080/garages')
+    axiosInstance.get('/garages')
       .then(response => {
         setGarages(response.data);
       })
@@ -58,7 +58,7 @@ const Repairs = () => {
       <div className='repair-body-img'></div>
       <div className="repairs">
         {garages.map(repair => (
-          <Repair key={repair.id} repair={repair} />
+          <Repair key={repair.garageId} repair={repair} />
         ))}
       </div>
       <Footer />

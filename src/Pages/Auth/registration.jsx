@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import axiosInstance from "../../Pages/Auth/axiosInstance";
 import "../../Assets/Styles/registration.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Registration = ({ setRegistrations }) => {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ const Registration = ({ setRegistrations }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add a state for loading
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,23 +28,27 @@ const Registration = ({ setRegistrations }) => {
       contact,
     };
 
+    setIsSubmitting(true); // Set loading state
+
     try {
-      // Send registration data to the server using axios
-      const response = await axios.post("http://localhost:8080/customers", newCustomer);
+      const response = await axiosInstance.post("/customers", newCustomer);
       console.log("Customer registered successfully:", response.data);
 
-      // Update registrations in localStorage
       const storedRegistrations = JSON.parse(localStorage.getItem("registrations")) || [];
       const updatedRegistrations = [response.data, ...storedRegistrations];
       localStorage.setItem("registrations", JSON.stringify(updatedRegistrations));
-
-      // Update state with the new registration
       setRegistrations(updatedRegistrations);
 
-      // Navigate to the login page
       navigate("/login");
     } catch (error) {
-      console.error("There was an error registering the customer:", error);
+      if (error.response && error.response.status === 409) {
+        alert("Email is already associated with an account. Please use a different email.");
+      } else {
+        console.error("There was an error registering the customer:", error);
+        alert("An error occurred during registration. Please try again later.");
+      }
+    } finally {
+      setIsSubmitting(false); // Reset loading state
     }
   };
 
@@ -107,8 +112,12 @@ const Registration = ({ setRegistrations }) => {
               />
             </div>
           </fieldset>
-          <button type="submit" className="submit action-button">
-            Submit
+          <button
+            type="submit"
+            className="submit action-button"
+            disabled={isSubmitting} // Disable button when loading
+          >
+            {isSubmitting ? "Registering..." : "Submit"} {/* Show loading text */}
           </button>
         </form>
       </div>

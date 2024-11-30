@@ -9,12 +9,11 @@ const Services = () => {
   const [mytext, setMytext] = useState('');
   const [response, setResponse] = useState('');
   const [redirectMessage, setRedirectMessage] = useState(''); // State for redirect message
+  const [loading, setLoading] = useState(false); // State for loading
   const responseRef = useRef(null);
   const navigate = useNavigate(); // Initialize useNavigate
 
   const API_KEY = 'YOUR_API_KEY';
-
- 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ const Services = () => {
     const token = sessionStorage.getItem('authToken');
     if (!token) {
       alert('You are not logged in. Redirecting to login page...');
-      
+
       // Redirect after a short delay to allow the user to see the alert
       setTimeout(() => {
         navigate('/login'); // Redirect to login
@@ -32,6 +31,8 @@ const Services = () => {
     }
 
     if (mytext.trim()) {
+      setLoading(true); // Start loading
+
       try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
@@ -44,7 +45,7 @@ const Services = () => {
             messages: [
               {
                 role: 'system',
-                content: 'You are an expert in car repairs, modifications, and services of the "AUTOGARAGE" vehicle repair hub company...',
+                content: 'You are an expert in car repairs, modifications, and services of the "AUTOGARAGE" vehicle repair hub company. If you are prompted with any queries that is not related to vehicles say to contact AUTOGARAGE Customer Service',
               },
               {
                 role: 'user',
@@ -69,6 +70,8 @@ const Services = () => {
       } catch (error) {
         console.error(error);
         setResponse('Error: Unable to process your request.');
+      } finally {
+        // The animation is handled in the useEffect, so we will set loading to false there
       }
     }
   };
@@ -82,7 +85,7 @@ const Services = () => {
   const typeEffect = (element, speed) => {
     var type = $(element).text();
     $(element).html(" ");
-  
+
     var i = 0;
     var timer = setInterval(() => {
       if (i < type.length) {
@@ -90,6 +93,7 @@ const Services = () => {
         i++;
       } else {
         clearInterval(timer);
+        setLoading(false); // End loading when animation is complete
       }
     }, speed);
   };
@@ -104,24 +108,33 @@ const Services = () => {
   }
 
   return (
-    <div style={{width:'100%',height:'100%'}}>
+    <div style={{ width: '100%', height: '100%' }}>
       <div className='service-img'></div>
       <div className='service-outer'></div>
       <NavBar />
       <div className='service-body'>
-        <h1 style={{color:'red', fontWeight:'500'}}>All in ONE Diagnostic Tool</h1>
-        <form id="chat-form" onSubmit={handleSubmit}>
-          <label htmlFor="mytext" style={{fontWeight:'500'}}>Enter your Queries:</label>
+        <h1 style={{ color: 'white', fontWeight: '400', display: 'flex', alignItems: 'center' }}>
+          AI powered
+          <div style={{ color: 'red', fontWeight: '600', display: 'inline', marginLeft: '5px' }}>
+            AUTOGARAGE
+          </div>
+          diagnostic tool
+        </h1>
+
+        <form id="chat-form" onSubmit={handleSubmit} style={{ position: 'relative', width: '100%', marginTop: '15px' }}>
+          <label htmlFor="mytext" style={{ fontWeight: '500' }}>Enter your Queries:</label>
           <input
             type="text"
             id="mytext"
-            placeholder="Enter your queries"
+            placeholder="Type in queries related to your vehicle here"
             style={{ position: 'relative', width: '50%', left: '10px', padding: '4px', fontSize: '16px', lineHeight: '1.5', fontFamily: 'inherit' }}
             value={mytext}
             onChange={(e) => setMytext(e.target.value)}
             required
           />
-          <button type="submit" style={{position:'relative', left:'20px'}}>Submit</button>
+          <button type="submit" style={{ position: 'relative', left: '20px' }} disabled={loading}>
+            {loading ? 'Generating...' : 'Submit'}
+          </button>
         </form>
 
         <div style={{ position: 'relative', width: '80%' }}>
